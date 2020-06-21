@@ -18,11 +18,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyUserDetailService userDetailsService;
 
     @Override
+    // 配置拦截策略
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/product/**").permitAll()
+                .antMatchers("/help/**").permitAll()
+                // 对应的字段值不能是ADMIN，而应该是 ROLE_ADMIN，下同
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/product/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().and()
@@ -33,16 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)// 设置自定义的userDetailsService
                 .passwordEncoder(passwordEncoder());
-//		auth
-//			.inMemoryAuthentication()
-//			.withUser("admin1")
-//				.password("admin1")
-//				.roles("ADMIN", "USER")
-//				.and()
-//			.withUser("user1").password("user1")
-//				.roles("USER");
     }
-// $2a$10$YUthO3FOocQFxBgMMke2ROV2MKqAJwHEb8VeVhgcy4oZkx5S/zTHm
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
