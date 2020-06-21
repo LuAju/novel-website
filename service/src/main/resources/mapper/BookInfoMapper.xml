@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.search.dao.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.search.entity.BookInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="book_writer" jdbcType="VARCHAR" property="bookWriter" />
+    <result column="book_info" jdbcType="VARCHAR" property="bookInfo" />
+    <result column="book_level" jdbcType="INTEGER" property="bookLevel" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, book_id, book_name, book_writer, book_info, book_level, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" parameterType="com.search.entity.BookInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.search.entity.BookInfoExample">
+    delete from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.search.entity.BookInfo">
+    insert into book_info (id, book_id, book_name, 
+      book_writer, book_info, book_level, 
+      gmt_create, gmt_modified)
+    values (#{id,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, 
+      #{bookWriter,jdbcType=VARCHAR}, #{bookInfo,jdbcType=VARCHAR}, #{bookLevel,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.search.entity.BookInfo">
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="bookName != null">
+        book_name,
+      </if>
+      <if test="bookWriter != null">
+        book_writer,
+      </if>
+      <if test="bookInfo != null">
+        book_info,
+      </if>
+      <if test="bookLevel != null">
+        book_level,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="bookName != null">
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookWriter != null">
+        #{bookWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="bookInfo != null">
+        #{bookInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bookLevel != null">
+        #{bookLevel,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.search.entity.BookInfoExample" resultType="java.lang.Long">
+    select count(*) from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update book_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null">
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookName != null">
+        book_name = #{record.bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookWriter != null">
+        book_writer = #{record.bookWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookInfo != null">
+        book_info = #{record.bookInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookLevel != null">
+        book_level = #{record.bookLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update book_info
+    set id = #{record.id,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      book_name = #{record.bookName,jdbcType=VARCHAR},
+      book_writer = #{record.bookWriter,jdbcType=VARCHAR},
+      book_info = #{record.bookInfo,jdbcType=VARCHAR},
+      book_level = #{record.bookLevel,jdbcType=INTEGER},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.search.entity.BookInfo">
+    update book_info
+    <set>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookWriter != null">
+        book_writer = #{bookWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="bookInfo != null">
+        book_info = #{bookInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bookLevel != null">
+        book_level = #{bookLevel,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.search.entity.BookInfo">
+    update book_info
+    set book_id = #{bookId,jdbcType=INTEGER},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      book_writer = #{bookWriter,jdbcType=VARCHAR},
+      book_info = #{bookInfo,jdbcType=VARCHAR},
+      book_level = #{bookLevel,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
