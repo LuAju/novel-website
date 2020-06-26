@@ -13,6 +13,7 @@
         <module>common</module>
         <module>service</module>
         <module>revearse</module>
+        <module>cloud_album</module>
     </modules>
 
     <properties>
